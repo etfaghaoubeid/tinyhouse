@@ -1,16 +1,20 @@
-import express from "express";
-const Port : number = 3333;
-import userRoutes from "./routes/user"
-import bodyParser from 'body-parser';
-const app = express();
-app.use(bodyParser.json())
-app.use('/user', userRoutes);
+import express ,{Application} from "express";
+import {ApolloServer} from "apollo-server-express"
 
-app.get('/', (req, res)=>{
-    res.send('hello')
-})
+import{resolvers, typeDefs} from "./graphql"
+import {connectDatabase} from "./database"
 
 
-app.listen(Port, ()=>{
-    console.log('app start on port 3333')
-})
+
+const init = async (app:Application)=>{
+    const db = await connectDatabase()
+    const Port : number = 3333;
+    const server = new ApolloServer({typeDefs, resolvers, context:()=>({db})});
+    server.applyMiddleware({app, path:'/api'}) 
+    app.listen(Port, ()=>{
+        console.log('app start on port 3333')
+    })
+    
+
+}
+init(express())
