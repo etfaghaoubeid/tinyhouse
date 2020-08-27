@@ -1,6 +1,6 @@
-import {ObjectID, Collection} from "mongodb"
+import {ObjectId, Collection} from "mongodb"
 export interface Listing {
-    _id :ObjectID, 
+    _id :ObjectId, 
     title:string, 
     image:string, 
     address:string, 
