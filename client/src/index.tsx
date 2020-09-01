@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
+import {Listings} from "./sections/Listings"
+
 ReactDOM.render(
   <React.StrictMode>
-    <div>heloo</div>
+    <Listings title="Tinyhouse Listing"/>
   </React.StrictMode>,
   document.getElementById('root')
 );
