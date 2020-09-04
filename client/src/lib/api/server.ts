@@ -10,6 +10,7 @@ export const server = {
             },
             body:JSON.stringify(body)
         });
+        return res;
 
     }
 }
