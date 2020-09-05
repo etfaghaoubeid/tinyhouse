@@ -1,8 +1,12 @@
-interface Body{
+interface Body<TVariables>{
     query:string
+    variables?: TVariables
+}
+interface MutationBody{
+    mutation:string
 }
 export const server = {
-    fetch: async (body:Body)=>{
+    fetch: async<TData = any , TVariables=any> (body:Body<TVariables>)=>{
         const res= await fetch('http://localhost:3333/api' , {
             method:"POST",
             headers:{
@@ -10,7 +14,19 @@ export const server = {
             },
             body:JSON.stringify(body)
         });
-        return res;
+        return res.json() as Promise<{data:TData}> ;
+
+    }, 
+    delete:async(body:MutationBody)=>{
+        const res = await fetch('http://localhost:3333/api', {
+            method:"POST", 
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(body)
+
+        });
+        return res.json()
 
     }
 }
